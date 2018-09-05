@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://dakboard.com/app/screenPredefined -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>DAKboard</title>
+	<link rel="stylesheet" href="./css/css">
+	
+	<link rel="stylesheet" href="./css/app.css">
+	<link rel="stylesheet" href="./css/screen-layout-main.css">
+	
+	<link rel="stylesheet" href="./css/weather-icons.css">
+	<link rel="stylesheet" href="./css/wu-icons-style.css">
+	
+	
+	<meta http-equiv="refresh" content="14400">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<!--<meta name="viewport" content="width=device-width, minimal-ui">-->
+	<link rel="apple-touch-icon" href="https://dakboard.com/img/apple-touch-icon.png">
+	<link rel="icon" sizes="192x192" href="https://dakboard.com/img/apple-touch-icon.png">
+
+	<script src="./js/jquery-2.1.1.min.js.download" integrity="sha256-h0cGsrExGgcZtSZ/fRz4AwV+Nn6Urh/3v3jFRQ0w9dQ=" crossorigin="anonymous"></script>
+	
+</head>
+<body>
+	<script src="./js/progressbar.min.js.download"></script>
+	<script src="./js/moment.min.js.download"></script>
+	<script src="./js/moment-timezone-2010-2010.min.js.download"></script>
+	<script src="./js/mpanel.min.js.download"></script>
+	<style>
+
+	.time-ampm { left: -1.4em }
+	
+	.brightness {
+		background: rgba(0,0,0, 0.3);
+	}
+
+	</style>
+<div class="layout-tablet font-large layout-portrait ">
+	
+
+
+	<!--<div id="options-link" class="xsmall dark translucent" >-->
+	<!--
+		<a href="https://dakboard.com/screens" class="options-link xsmall dark" style="opacity: 0;">
+			<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<span class="options-desc font-light">Options</span>
+		</a>
+	-->
+	<!--</div>-->
+
+	<header>
+		<div id="weather-alert" class="translucent-alert weather-alert hide" style="display: none;">
+			<div class="pull-left  font-ultralight big" style="">
+				<span id="weather-alert-icon" class="wi"></span>
+			</div>
+			<div style="margin-left: 70px;">
+
+					<div id="weather-alert-expires" class="dim xsmall font-light pull-right" style="margin-right: 40px;"></div>
+					<div id="weather-alert-description" class="small font-light"></div>
+
+				<div id="weather-alert-message" class="xxsmall"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="date pull-right small font-light bright" style="padding: 30px 20px 0 0"><div class="day-of-week"></div><div class="month"></div></div>
+		
+		<div class="clock hide" style="display: block;">
+			<div class="time large bright">10:19
+				<span class="sec">48</span>
+				<span class="time-ampm">AM</span>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+
+		<div id="calendar" class="events hide"></div>
+	</header>
+
+    <div class="brightness abs-zero"></div>
+
+    <div id="content" class="abs-zero">
+	  <div id="background-underlay-1" class="abs-zero" 
+			style="display: block;"></div>
+	  <div id="background-underlay-2" class="abs-zero" style="background: none; z-index: 9; display: none;"></div>
+    </div>
+    
+    <footer>
+	    <div id="weather" class="hide">
+			<div class="weather-container">
+				<div id="weather-current" class="weather-item weather-current">
+					<div class="bright big">
+						63<sup>°</sup>
+						<span class="wi wi-yahoo-34" title=""></span> 
+					</div>
+					<div class="bright">Feels like 63</div>
+					<div class="weather-current-alt font-light">
+						<span class="wi wi-strong-wind"></span> 11 s
+						<br>
+						<span class="wi wi-sunset"></span> 7:30				
+					</div>
+					
+				</div>
+
+				<div id="weather-forecast" style="display:contents;">
+					<div class="text-center weather-item weather-forecast">
+						<div class="day">Today</div>
+						<!--<div class="day">Wed</div>-->
+						<span class="wi wi-yahoo-32 bright medium"></span><br>
+						<span class="bright weather-forecast-item-high">84</span>
+						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">57</span>
+					</div>
+					<div class="text-center weather-item weather-forecast">
+						<div class="day">Thu</div>
+						<!--<div class="day">Thu</div>-->
+						<span class="wi wi-yahoo-34 bright medium"></span><br>
+						<span class="bright weather-forecast-item-high">88</span>
+						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">55</span>
+					</div>
+					<div class="text-center weather-item weather-forecast">
+						<div class="day">Fri</div>
+						<!--<div class="day">Fri</div>-->
+						<span class="wi wi-yahoo-32 bright medium"></span><br>
+						<span class="bright weather-forecast-item-high">95</span>
+						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">58</span>
+					</div>
+					<div class="text-center weather-item weather-forecast">
+						<div class="day">Sat</div>
+						<!--<div class="day">Sat</div>-->
+						<span class="wi wi-yahoo-32 bright medium"></span><br>
+						<span class="bright weather-forecast-item-high">92</span>
+						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">60</span>
+					</div>
+				</div>
+			</div>
+
+			<script>
+				$('#weather-alert').hide();
+			</script>
+		</div>
+
+		<div id="weather-loading" class="text-center" style="margin-bottom: 30px; display: none;">
+			<span class="dark font-light">Loading Weather...</span>
+		</div>
+	</footer>
+	<div id="progress"></div>
+</div>
+
+<script>
+	$(function() {
+
+		/*
+		var i = null;
+
+		if ('ontouchstart' in window) {
+			$(window).on('touchstart', function() {
+				clearTimeout(i);
+				$(".options-link").css({opacity: 1});
+				i = setTimeout(function () {
+					$(".options-link").css({opacity: 0});
+				}, 10000);
+			});
+		} else {
+			$(window).mousemove(function() {
+				clearTimeout(i);
+				$(".options-link").css({opacity: 1});
+				i = setTimeout(function () {
+					$(".options-link").css({opacity:0});
+				}, 10000);
+			});
+		}
+
+		i = setTimeout(function () {
+			$(".options-link").css({opacity: 0});
+		}, 10000);
+		*/
+		
+		var myMpanel = new mPanel;
+
+		myMpanel.init({
+			route: "/app",
+			isPremium: 0,
+			timeFormat: 12,
+			dateFormat: "MMMM D",
+			clockType: "digital",
+			timezone: "America/Los_Angeles",
+			showSeconds: "1",
+			showAmpm: "1",
+			photoTransition: 1,
+			photoChange: 60000,
+			photoLayout: "fill"
+		});
+
+
+
+		myMpanel.updatePhoto();
+		
+		$('.clock').show();
+		myMpanel.updateTime();
+		
+		
+		myMpanel.updateWeather();	
+	});
+</script>
+</body></html>
