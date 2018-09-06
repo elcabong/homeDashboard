@@ -85,50 +85,9 @@
     <footer>
 	    <div id="weather" class="hide">
 			<div class="weather-container">
-				<div id="weather-current" class="weather-item weather-current">
-					<div class="bright big">
-						63<sup>°</sup>
-						<span class="wi wi-yahoo-34" title=""></span> 
-					</div>
-					<div class="bright">Feels like 63</div>
-					<div class="weather-current-alt font-light">
-						<span class="wi wi-strong-wind"></span> 11 s
-						<br>
-						<span class="wi wi-sunset"></span> 7:30				
-					</div>
-					
-				</div>
-
-				<div id="weather-forecast" style="display:contents;">
-					<div class="text-center weather-item weather-forecast">
-						<div class="day">Today</div>
-						<!--<div class="day">Wed</div>-->
-						<span class="wi wi-yahoo-32 bright medium"></span><br>
-						<span class="bright weather-forecast-item-high">84</span>
-						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">57</span>
-					</div>
-					<div class="text-center weather-item weather-forecast">
-						<div class="day">Thu</div>
-						<!--<div class="day">Thu</div>-->
-						<span class="wi wi-yahoo-34 bright medium"></span><br>
-						<span class="bright weather-forecast-item-high">88</span>
-						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">55</span>
-					</div>
-					<div class="text-center weather-item weather-forecast">
-						<div class="day">Fri</div>
-						<!--<div class="day">Fri</div>-->
-						<span class="wi wi-yahoo-32 bright medium"></span><br>
-						<span class="bright weather-forecast-item-high">95</span>
-						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">58</span>
-					</div>
-					<div class="text-center weather-item weather-forecast">
-						<div class="day">Sat</div>
-						<!--<div class="day">Sat</div>-->
-						<span class="wi wi-yahoo-32 bright medium"></span><br>
-						<span class="bright weather-forecast-item-high">92</span>
-						<span class="bright weather-forecast-item-low xxsmall" style="margin: 0 10px;">60</span>
-					</div>
-				</div>
+				<div id="weather-current" class="weather-item weather-current"></div>
+				<div id="weather-forecast" style="position:absolute;bottom:300px;right:0;"></div>
+				<div id="weather-hourly" style="overflow: hidden;position: absolute;bottom: 30px;left: 350px;"></div>
 			</div>
 
 			<script>
