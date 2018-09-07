@@ -14,7 +14,9 @@ body, html {
 	letter-spacing: 0px;
 	color: #ccc;
 	 -webkit-font-smoothing: antialiased;
-	text-shadow: 1px 1px 0px rgba(0,0,0,.3) }
+	text-shadow: 1px 1px 0px rgba(0,0,0,.3);
+	overflow:hidden;
+}
 a {
 	color: #ccc;
 	text-decoration: none }

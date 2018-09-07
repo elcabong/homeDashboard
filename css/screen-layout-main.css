@@ -375,7 +375,9 @@ footer {
 	margin-bottom: 30px;
 }
 .layout-tablet .weather-forecast {
-	line-height: 1em }
+	line-height: 1em; 
+	padding: 0 10px;
+}
 .layout-tablet .weather-current {
 	 min-width: 0 }
 .layout-tablet .weather-current-alt {
@@ -385,6 +387,9 @@ footer {
 }
 .layout-tablet .weather-forecast .wi {
 	margin-bottom: 20px;
+}
+.layout-tablet .weather-hourly span {
+	white-space: nowrap;
 }
 .layout-portrait .weather-pop {
 	color: #fff;

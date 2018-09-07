@@ -14,7 +14,7 @@
 	<meta http-equiv="refresh" content="14400">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="viewport" content="width=device-width, minimal-ui">
+	<meta name='viewport' content='width=device-width,height:device-height, initial-scale=.5, maximum-scale=.5, minimum-scale=.5, user-scalable=auto, minimal-ui' />
 	<link rel="apple-touch-icon" href="https://dakboard.com/img/apple-touch-icon.png">
 	<link rel="icon" sizes="192x192" href="https://dakboard.com/img/apple-touch-icon.png">
 
@@ -40,7 +40,7 @@
 	<div id="mapToggle" onclick="toggleMaps()" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
 		<img src="./images/google-maps.png" />
 	</div>
-	<div id="mapContainer" style="position: absolute;height: 70%;width: 70%;z-index: 1000;overflow: hidden;margin: 11.5% 15%;">
+	<div id="mapContainer" style="bottom:-75%;position: absolute;height: 75%;width: 100%;z-index: 1000;overflow: hidden;">
 		<div id="map" style="height:100%;"></div>
     </div>
 	<style>
@@ -60,31 +60,27 @@
 
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
-		$('map').show(2500);
+		$('#mapContainer').animate({bottom:'0'},1500);
       }
 	  
 	  var mapOpen = false;
 	  function toggleMaps(){
 		if(mapOpen===true){
-			$('map').hide(2500);
-			mapOpen=false;
-			document.getElementById('map').innerHTML = '';
-			document.getElementById('mapToggle').style.opactiy = "0.7";
+			$('#mapContainer').animate({bottom:'-75%'},1500);
+			setTimeout(function(){
+				mapOpen=false;
+				document.getElementById('map').innerHTML = '';
+				document.getElementById('mapToggle').style.opactiy = "0.7";
+			},1500);
 		} else {
 			mapOpen=true;
 			document.getElementById('mapToggle').style.opactiy = "1";
 			initMap();
 		}
-		
-	  
 	  }
 	</script>
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y"
-		
-		/*src="https://www.google.com/maps/embed/v3/directions?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y&origin=Pocket+Sacramento&destination=CSU+Sacramento"
-		*/
-		/*src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y&origin=Pocket+Sacramento&destination=CSU+Sacramento&mode=driving"*/
 	></script>
 	
 	
@@ -135,16 +131,14 @@
 	  <div id="background-underlay-2" class="abs-zero" style="background: none; z-index: 9; display: none;"></div>
     </div>
     
-    <footer>
-	    <div id="weather" class="hide">
-			<div class="weather-container">
+    <footer style="display: block;position: absolute;bottom: 0;width: 100%;">
+	    <div id="weather" class="hide" style="display: block;position: relative;bottom: 0;width: 95%;padding: 0 2.5%;">
+			<div class="weather-container-current">
 				<div id="weather-current" class="weather-item weather-current"></div>
-				<div id="weather-forecast" style="display:contents;"></div>
-				<div id="weather-hourly" style="overflow: hidden;position: absolute;bottom: 30px;left: 350px;"></div>				
-				<!--
-				<div id="weather-forecast" style="position:absolute;bottom:300px;right:0;"></div>
-				<div id="weather-hourly" style="overflow: hidden;position: absolute;bottom: 30px;left: 350px;"></div>
-				-->
+				<div id="weather-forecast" style="position:absolute;bottom:0;right:0;"></div>			
+			</div>
+			<div class="weather-container-hourly" style="display:none;">
+				<div id="weather-hourly" style="overflow-y: hidden;overflow-x: auto;bottom: 25px;left: 0;"></div>	
 			</div>
 
 			<script>
