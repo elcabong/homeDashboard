@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<!-- saved from url=(0041)https://dakboard.com/app/screenPredefined -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>DAKboard</title>
+	<title>Dashboard</title>
 	<link rel="stylesheet" href="./css/css">
 	
 	<link rel="stylesheet" href="./css/app.css">
@@ -15,7 +14,7 @@
 	<meta http-equiv="refresh" content="14400">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
-	<!--<meta name="viewport" content="width=device-width, minimal-ui">-->
+	<meta name="viewport" content="width=device-width, minimal-ui">
 	<link rel="apple-touch-icon" href="https://dakboard.com/img/apple-touch-icon.png">
 	<link rel="icon" sizes="192x192" href="https://dakboard.com/img/apple-touch-icon.png">
 
@@ -38,8 +37,10 @@
 	</style>
 <div class="layout-tablet font-large layout-portrait ">
 	
-
-	<div id="mapContainer" style="position: absolute;height: 50%;width: 50%;z-index: 1000;overflow: hidden;margin: 12.5% 25%;">
+	<div id="mapToggle" onclick="toggleMaps()" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
+		<img src="./images/google-maps.png" />
+	</div>
+	<div id="mapContainer" style="position: absolute;height: 70%;width: 70%;z-index: 1000;overflow: hidden;margin: 11.5% 15%;">
 		<div id="map" style="height:100%;"></div>
     </div>
 	<style>
@@ -53,16 +54,33 @@
 	<script>
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 11,
+          zoom: 12,
           center: {lat: 38.514379, lng: -121.494088}
         });
 
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
+		$('map').show(2500);
       }
+	  
+	  var mapOpen = false;
+	  function toggleMaps(){
+		if(mapOpen===true){
+			$('map').hide(2500);
+			mapOpen=false;
+			document.getElementById('map').innerHTML = '';
+			document.getElementById('mapToggle').style.opactiy = "0.7";
+		} else {
+			mapOpen=true;
+			document.getElementById('mapToggle').style.opactiy = "1";
+			initMap();
+		}
+		
+	  
+	  }
 	</script>
 	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y&callback=initMap"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y"
 		
 		/*src="https://www.google.com/maps/embed/v3/directions?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y&origin=Pocket+Sacramento&destination=CSU+Sacramento"
 		*/
