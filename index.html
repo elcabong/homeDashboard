@@ -78,6 +78,63 @@
 			initMap();
 		}
 	  }
+	  
+	  var weatherCurrentOpen = true;
+	  function toggleWeather(){
+		if(weatherCurrentOpen===true){
+			$('#weather-container-current').animate({width:'0'},1500);
+			$('#weather-container-hourly').animate({width:'100%'},1500);
+			$('#weather-container-current .weather-item').hide();
+			$('#weather-container-hourly .weather-item').show();
+			//setTimeout(function(){
+			//	
+			//},1000);
+			weatherCurrentOpen=false;
+		} else {
+			$('#weather-container-current').animate({width:'100%'},1500);
+			$('#weather-container-hourly').animate({width:'0'},1500);
+			setTimeout(function(){
+				$('#weather-container-hourly .weather-item').hide();
+				$('#weather-container-current .weather-item').show();				
+			},1300);
+			weatherCurrentOpen=true;
+		}
+	  }
+	  
+
+		var timer;
+		window.onload = resetTimer;
+		// DOM Events
+		document.onmousemove = resetTimer;
+		document.onkeypress = resetTimer;
+		document.onmousedown = resetTimer; // touchscreen presses
+		document.ontouchstart = resetTimer;
+		document.onclick = resetTimer;     // touchpad clicks
+		document.onscroll = resetTimer;    // scrolling with arrow keys
+		
+		
+		function screenSaver() {
+			console.log("screensaver");
+			$('#background-underlay-idle').show();
+			$('#background-underlay-idleDimmer').show();
+			$('#progress').hide();
+		}
+		
+		function resetTimer() {
+			console.log("resetTimer");
+			$('#background-underlay-idle').hide();
+			$('#background-underlay-idleDimmer').hide();
+			$('#progress').show();
+			clearTimeout(timer);
+			timer = setTimeout(screenSaver, 18000000)
+			//timer = setTimeout(screenSaver, 3000)
+			// 1000 milisec = 1 sec
+			// 60000 = 1 minute
+			// 600000 = 10 minutes
+			// 18000000 = 30 minutes
+		}
+  
+	  
 	</script>
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y"
@@ -129,16 +186,20 @@
 	  <div id="background-underlay-1" class="abs-zero" 
 			style="display: block;"></div>
 	  <div id="background-underlay-2" class="abs-zero" style="background: none; z-index: 9; display: none;"></div>
+	  <div id="background-underlay-idle" class="abs-zero" style="background: black; z-index: 10; display: none;"></div>
+	  <div id="background-underlay-idleDimmer" class="abs-zero" style="background: rgba(0, 0, 0, .5) none repeat scroll 0% 0%; z-index: 9999; display: none;"></div>
     </div>
     
     <footer style="display: block;position: absolute;bottom: 0;width: 100%;">
 	    <div id="weather" class="hide" style="display: block;position: relative;bottom: 0;width: 95%;padding: 0 2.5%;">
-			<div class="weather-container-current">
+			<div id="weather-container-current">
 				<div id="weather-current" class="weather-item weather-current"></div>
-				<div id="weather-forecast" style="position:absolute;bottom:0;right:0;"></div>			
+				<div id="weather-forecast" class="weather-item" style="position:absolute;bottom:0;right:50px;"></div>
+				<img src="./images/1hour.png" onclick="toggleWeather()" class="weather-item" style="position:absolute;bottom:60px;right:0;cursor:pointer;"/>
 			</div>
-			<div class="weather-container-hourly" style="display:none;">
-				<div id="weather-hourly" style="overflow-y: hidden;overflow-x: auto;bottom: 25px;left: 0;"></div>	
+			<div id="weather-container-hourly" style="position:relative;right:0;width:0;overflow:hidden;float:right;">
+				<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;bottom:100px;left:-5px;cursor:pointer;"/>
+				<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;bottom: 25px;left:50px;position:relative;"></div>	
 			</div>
 
 			<script>
