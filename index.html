@@ -106,18 +106,22 @@
 		document.onscroll = resetTimer;    // scrolling with arrow keys
 		
 		
+		var screenSaved = false;
 		function screenSaver() {
 			console.log("screensaver");
 			$('#background-underlay-idle').show();
 			$('#background-underlay-idleDimmer').show();
 			$('#progress').hide();
+			screenSaved = true;
 		}
 		
 		function resetTimer() {
+			$('body').css({"margin-left":"0"});
 			console.log("resetTimer");
 			$('#background-underlay-idle').hide();
 			$('#background-underlay-idleDimmer').hide();
 			$('#progress').show();
+			screenSaved = false;
 			clearTimeout(timer);
 			timer = setTimeout(screenSaver, 600000);
 			//timer = setTimeout(screenSaver, 3000)
@@ -126,6 +130,18 @@
 			// 600000 = 10 minutes
 			// 18000000 = 30 minutes
 		}
+		
+		setInterval(function(){
+			if(screenSaved===true){
+				if($('body').css('margin-left') != '-4px'){
+					$('body').css({'margin-left':'-4px'});
+				} else {
+					$('body').css({'margin-left':'4px'});
+				}
+			} else {
+				$('body').css({"margin-left":"0"});
+			}
+		}, 600000);
   
 	  
 	</script>
