@@ -111,8 +111,8 @@
 			console.log("screensaver");
 			$('#background-underlay-idle').show();
 			$('#background-underlay-idleDimmer').show();
-			$('#progress').hide();
 			screenSaved = true;
+			$('.screenSaved').hide();
 		}
 		
 		function resetTimer() {
@@ -120,8 +120,8 @@
 			console.log("resetTimer");
 			$('#background-underlay-idle').hide();
 			$('#background-underlay-idleDimmer').hide();
-			$('#progress').show();
 			screenSaved = false;
+			$('.screenSaved').show();
 			clearTimeout(timer);
 			timer = setTimeout(screenSaver, 600000);
 			//timer = setTimeout(screenSaver, 3000)
@@ -142,8 +142,6 @@
 				$('body').css({"margin-left":"0"});
 			}
 		}, 600000);
-  
-	  
 	</script>
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y"
@@ -174,7 +172,7 @@
 			<div class="clearfix"></div>
 			<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:auto;"></div>
 		</div>
-		<div id="mapToggle" onclick="toggleMaps()" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
+		<div id="mapToggle" onclick="toggleMaps()" class="screenSaved" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
 			<img src="./images/google-maps.png" />
 		</div>
 		<div class="date pull-right small font-light bright" style="padding: 30px 20px 0 0"><div class="day-of-week"></div><div class="month"></div></div>
@@ -216,11 +214,11 @@
 				<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;bottom: 25px;left:50px;position:relative;"></div>	
 			</div>
 		</div>
-		<div id="weather-loading" class="text-center" style="margin-bottom: 30px; display: none;">
+		<div id="weather-loading" class="text-center" style="margin-bottom: 30px;">
 			<span class="dark font-light">Loading Weather...</span>
 		</div>
 	</footer>
-	<div id="progress"></div>
+	<div id="progress" class="screenSaved"></div>
 </div>
 
 <script>
