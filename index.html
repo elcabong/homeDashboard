@@ -14,7 +14,7 @@
 	<meta http-equiv="refresh" content="14400">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
-	<meta name='viewport' content='width=device-width,height:device-height, initial-scale=.5, maximum-scale=.5, minimum-scale=.5, user-scalable=auto, minimal-ui' />
+	<meta name='viewport' content='width=device-width,height:device-height, initial-scale=.6, maximum-scale=.6, minimum-scale=.6, user-scalable=auto, minimal-ui' />
 	<link rel="apple-touch-icon" href="https://dakboard.com/img/apple-touch-icon.png">
 	<link rel="icon" sizes="192x192" href="https://dakboard.com/img/apple-touch-icon.png">
 
@@ -36,13 +36,6 @@
 
 	</style>
 <div class="layout-tablet font-large layout-portrait ">
-	
-	<div id="mapToggle" onclick="toggleMaps()" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
-		<img src="./images/google-maps.png" />
-	</div>
-	<div id="mapContainer" style="bottom:0;position: absolute;height: 0;width: 100%;z-index: 1000;overflow: hidden;">
-		<div id="map" style="height:100%;"></div>
-    </div>
 	<style>
 		.gmnoprint {
 			display: none;
@@ -126,7 +119,7 @@
 			$('#background-underlay-idleDimmer').hide();
 			$('#progress').show();
 			clearTimeout(timer);
-			timer = setTimeout(screenSaver, 18000000)
+			timer = setTimeout(screenSaver, 600000);
 			//timer = setTimeout(screenSaver, 3000)
 			// 1000 milisec = 1 sec
 			// 60000 = 1 minute
@@ -155,17 +148,18 @@
 
 	<header>
 		<div id="weather-alert" class="translucent-alert weather-alert hide" style="display: none;">
-			<div class="pull-left  font-ultralight big" style="">
-				<span id="weather-alert-icon" class="wi"></span>
+			<div class="pull-left  font-ultralight xxsmall">
+				<img id="weather-alert-icon" src="./images/alert.png" height="25px" />
 			</div>
 			<div style="margin-left: 70px;">
-
-					<div id="weather-alert-expires" class="dim xsmall font-light pull-right" style="margin-right: 40px;"></div>
+					<div id="weather-alert-expires" class="dim xxsmall font-light pull-right"></div>
 					<div id="weather-alert-description" class="small font-light"></div>
-
-				<div id="weather-alert-message" class="xxsmall"></div>
 			</div>
 			<div class="clearfix"></div>
+			<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:auto;"></div>
+		</div>
+		<div id="mapToggle" onclick="toggleMaps()" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
+			<img src="./images/google-maps.png" />
 		</div>
 		<div class="date pull-right small font-light bright" style="padding: 30px 20px 0 0"><div class="day-of-week"></div><div class="month"></div></div>
 		
@@ -180,6 +174,10 @@
 		<div id="calendar" class="events hide"></div>
 	</header>
 
+	<div id="mapContainer" style="bottom:0;position: absolute;height: 0;width: 100%;z-index: 1000;overflow: hidden;">
+		<div id="map" style="height:100%;"></div>
+    </div>
+	
     <div class="brightness abs-zero"></div>
 
     <div id="content" class="abs-zero">
@@ -197,16 +195,11 @@
 				<div id="weather-forecast" class="weather-item" style="position:absolute;bottom:0;right:50px;"></div>
 				<img src="./images/1hour.png" onclick="toggleWeather()" class="weather-item" style="position:absolute;bottom:60px;right:0;cursor:pointer;"/>
 			</div>
-			<div id="weather-container-hourly" style="position:relative;right:0;width:0;overflow:hidden;float:right;">
+			<div id="weather-container-hourly" style="position:relative;right:0;width:0;overflow:auto;float:right;">
 				<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;bottom:100px;left:-5px;cursor:pointer;"/>
 				<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;bottom: 25px;left:50px;position:relative;"></div>	
 			</div>
-
-			<script>
-				$('#weather-alert').hide();
-			</script>
 		</div>
-
 		<div id="weather-loading" class="text-center" style="margin-bottom: 30px; display: none;">
 			<span class="dark font-light">Loading Weather...</span>
 		</div>
