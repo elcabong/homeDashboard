@@ -2,98 +2,153 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Dashboard</title>
 	<link rel="stylesheet" href="./css/css">
-	
 	<link rel="stylesheet" href="./css/app.css">
 	<link rel="stylesheet" href="./css/screen-layout-main.css">
-	
 	<link rel="stylesheet" href="./css/weather-icons.css">
 	<link rel="stylesheet" href="./css/weather-icons-wind.css">
 	<link rel="stylesheet" href="./css/wu-icons-style.css">
 	
-	
 	<meta http-equiv="refresh" content="14400">
-	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
+	<meta name='apple-mobile-web-app-capable' content='yes' />		
+	<meta name="apple-mobile-web-app-title" content="sankeyAngular">
 	<meta name='viewport' content='width=device-width,height:device-height, initial-scale=.6, maximum-scale=.6, minimum-scale=.6, user-scalable=auto, minimal-ui' />
-	<link rel="apple-touch-icon" href="https://dakboard.com/img/apple-touch-icon.png">
-	<link rel="icon" sizes="192x192" href="https://dakboard.com/img/apple-touch-icon.png">
+	<link rel="icon" sizes="192x192" href="icon-hirez.png">
+	<link rel="icon" sizes="128x128" href="icon-lowrez.png">
+	<link rel="apple-touch-icon" href="icon-lowrez-58.png">
+	<link rel="apple-touch-startup-image" href="startup-image-320x460.png">
 
-	<script src="./js/jquery-2.1.1.min.js.download" integrity="sha256-h0cGsrExGgcZtSZ/fRz4AwV+Nn6Urh/3v3jFRQ0w9dQ=" crossorigin="anonymous"></script>
-	
+	<script src="./js/jquery-2.1.1.min.js" integrity="sha256-h0cGsrExGgcZtSZ/fRz4AwV+Nn6Urh/3v3jFRQ0w9dQ=" crossorigin="anonymous"></script>
+	<script src="./js/progressbar.min.js"></script>
+	<script src="./js/moment.min.js"></script>
+	<script src="./js/moment-timezone-2010-2010.min.js"></script>
+	<script src="./js/mpanel.min.js"></script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y"
+	></script>
 </head>
 <body>
-	<script src="./js/progressbar.min.js.download"></script>
-	<script src="./js/moment.min.js.download"></script>
-	<script src="./js/moment-timezone-2010-2010.min.js.download"></script>
-	<script src="./js/mpanel.min.js.download"></script>
-	<style>
+	<div class="layout-tablet font-large layout-portrait">
 
-	.time-ampm { left: -1.4em }
-	
-	.brightness {
-		background: rgba(0,0,0, 0.3);
-	}
+		<!--<div id="options-link" class="xsmall dark translucent" >-->
+		<!--
+			<a href="https://dakboard.com/screens" class="options-link xsmall dark" style="opacity: 0;">
+				<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<span class="options-desc font-light">Options</span>
+			</a>
+		-->
+		<!--</div>-->
 
-	</style>
-<div class="layout-tablet font-large layout-portrait ">
-	<style>
-		.gmnoprint {
-			display: none;
-		}
-		.gm-control-active.gm-fullscreen-control {
-			display: none;
-		}
-	</style>
+		<header>
+			<div id="weather-alert" class="translucent-alert weather-alert hide" style="display: none;">
+				<div class="pull-left  font-ultralight xxsmall">
+					<img id="weather-alert-icon" src="./images/alert.png" height="25px" />
+				</div>
+				<div style="margin-left: 70px;">
+						<div id="weather-alert-expires" class="dim xxsmall font-light pull-right"></div>
+						<div id="weather-alert-description" class="small font-light"></div>
+				</div>
+				<div class="clearfix"></div>
+				<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:auto;"></div>
+			</div>
+			<div id="mapToggle" onclick="toggleMaps()" class="screenSaved" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
+				<img src="./images/google-maps.png" />
+			</div>
+			<div class="date pull-right small font-light bright" style="padding: 30px 20px 0 0"><div class="day-of-week"></div><div class="month"></div></div>
+			
+			<div class="clock hide">
+				<div class="time large bright">10:19
+					<span class="sec">48</span>
+					<span class="time-ampm">AM</span>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+
+			<div id="calendar" class="events hide"></div>
+		</header>
+
+		<div id="mapContainer" style="bottom:0;position: absolute;height: 0;width: 100%;z-index: 1000;overflow: hidden;">
+			<div id="map" style="height:100%;"></div>
+		</div>
+		
+		<div class="brightness abs-zero"></div>
+
+		<div id="content" class="abs-zero">
+		  <div id="background-underlay-1" class="abs-zero" 
+				style="display: block;"></div>
+		  <div id="background-underlay-2" class="abs-zero" style="background: none; z-index: 9; display: none;"></div>
+		  <div id="background-underlay-idle" class="abs-zero" style="background: black; z-index: 10; display: none;"></div>
+		  <div id="background-underlay-idleDimmer" class="abs-zero" style="background: rgba(0, 0, 0, .5) none repeat scroll 0% 0%; z-index: 9999; display: none;"></div>
+		</div>
+		
+		<footer style="display: block;position: absolute;bottom: 0;width: 100%;">
+			<div id="weather" class="hide" style="display: block;position: relative;bottom: 0;width: 95%;padding: 0 2.5%;">
+				<div id="weather-container-current">
+					<div id="weather-current" class="weather-item weather-current"></div>
+					<div id="weather-forecast" class="weather-item" style="position:absolute;bottom:0;right:50px;"></div>
+					<img src="./images/1hour.png" onclick="toggleWeather()" class="weather-item" style="position:absolute;bottom:60px;right:0;cursor:pointer;"/>
+				</div>
+				<div id="weather-container-hourly" style="position:relative;right:-2%;width:0;overflow:auto;float:right;">
+					<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;bottom:100px;left:-5px;cursor:pointer;"/>
+					<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;bottom: 25px;left:50px;position:relative;"></div>	
+				</div>
+			</div>
+			<div id="weather-loading" class="text-center" style="margin-bottom: 30px;">
+				<span class="dark font-light">Loading Weather...</span>
+			</div>
+		</footer>
+		<div id="progress" class="screenSaved"></div>
+	</div>
+
 	<script>
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
-          center: {lat: 38.514379, lng: -121.494088}
-        });
+		function initMap() {
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 12,
+				center: {lat: 38.514379, lng: -121.494088}
+			});
 
-        var trafficLayer = new google.maps.TrafficLayer();
-        trafficLayer.setMap(map);
-		$('#mapContainer').animate({height:'75%'},1500);
-      }
-	  
-	  var mapOpen = false;
-	  function toggleMaps(){
-		if(mapOpen===true){
-			$('#mapContainer').animate({height:'0'},1500);
-			setTimeout(function(){
-				mapOpen=false;
-				document.getElementById('map').innerHTML = '';
-				document.getElementById('mapToggle').style.opactiy = "0.7";
-			},1500);
-		} else {
-			mapOpen=true;
-			document.getElementById('mapToggle').style.opactiy = "1";
-			initMap();
+			var trafficLayer = new google.maps.TrafficLayer();
+			trafficLayer.setMap(map);
+			$('#mapContainer').animate({height:'75%'},1500);
 		}
-	  }
-	  
-	  var weatherCurrentOpen = true;
-	  function toggleWeather(){
-		if(weatherCurrentOpen===true){
-			$('#weather-container-current').animate({width:'0'},1500);
-			$('#weather-container-hourly').animate({width:'100%'},1500);
-			$('#weather-container-current .weather-item').hide();
-			$('#weather-container-hourly .weather-item').show();
-			//setTimeout(function(){
-			//	
-			//},1000);
-			weatherCurrentOpen=false;
-		} else {
-			$('#weather-container-current').animate({width:'100%'},1500);
-			$('#weather-container-hourly').animate({width:'0'},1500);
-			setTimeout(function(){
-				$('#weather-container-hourly .weather-item').hide();
-				$('#weather-container-current .weather-item').show();				
-			},1300);
-			weatherCurrentOpen=true;
+		  
+		var mapOpen = false;
+		function toggleMaps(){
+			if(mapOpen===true){
+				$('#mapContainer').animate({height:'0'},1500);
+				setTimeout(function(){
+					mapOpen=false;
+					document.getElementById('map').innerHTML = '';
+					document.getElementById('mapToggle').style.opactiy = "0.7";
+				},1500);
+			} else {
+				mapOpen=true;
+				document.getElementById('mapToggle').style.opactiy = "1";
+				initMap();
+			}
 		}
-	  }
-	  
+		  
+		var weatherCurrentOpen = true;
+		function toggleWeather(){
+			if(weatherCurrentOpen===true){
+				$('#weather-container-current').animate({width:'0'},1500);
+				$('#weather-container-hourly').animate({width:'103%'},1500);
+				$('#weather-container-current .weather-item').hide();
+				$('#weather-container-hourly .weather-item').show();
+				//setTimeout(function(){
+				//	
+				//},1000);
+				weatherCurrentOpen=false;
+			} else {
+				$('#weather-container-current').animate({width:'100%'},1500);
+				$('#weather-container-hourly').animate({width:'0'},1500);
+				setTimeout(function(){
+					$('#weather-container-hourly .weather-item').hide();
+					$('#weather-container-current .weather-item').show();				
+				},1300);
+				weatherCurrentOpen=true;
+			}
+		}
+		  
 
 		var timer;
 		window.onload = resetTimer;
@@ -108,7 +163,7 @@
 		
 		var screenSaved = false;
 		function screenSaver() {
-			console.log("screensaver");
+			//console.log("screensaver");
 			$('#background-underlay-idle').show();
 			$('#background-underlay-idleDimmer').show();
 			screenSaved = true;
@@ -116,8 +171,8 @@
 		}
 		
 		function resetTimer() {
+			//console.log("resetTimer");
 			$('body').css({"margin-left":"0"});
-			console.log("resetTimer");
 			$('#background-underlay-idle').hide();
 			$('#background-underlay-idleDimmer').hide();
 			screenSaved = false;
@@ -142,142 +197,36 @@
 				$('body').css({"margin-left":"0"});
 			}
 		}, 600000);
-	</script>
-	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz5MdlcKiMA6mmdDbbVTf3HUedsMq_n8Y"
-	></script>
 	
 	
-	
-	
-	
+		var backgroundImages = [];
+		$(function() {
+			var myMpanel = new mPanel;
 
-	<!--<div id="options-link" class="xsmall dark translucent" >-->
-	<!--
-		<a href="https://dakboard.com/screens" class="options-link xsmall dark" style="opacity: 0;">
-			<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<span class="options-desc font-light">Options</span>
-		</a>
-	-->
-	<!--</div>-->
-
-	<header>
-		<div id="weather-alert" class="translucent-alert weather-alert hide" style="display: none;">
-			<div class="pull-left  font-ultralight xxsmall">
-				<img id="weather-alert-icon" src="./images/alert.png" height="25px" />
-			</div>
-			<div style="margin-left: 70px;">
-					<div id="weather-alert-expires" class="dim xxsmall font-light pull-right"></div>
-					<div id="weather-alert-description" class="small font-light"></div>
-			</div>
-			<div class="clearfix"></div>
-			<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:auto;"></div>
-		</div>
-		<div id="mapToggle" onclick="toggleMaps()" class="screenSaved" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
-			<img src="./images/google-maps.png" />
-		</div>
-		<div class="date pull-right small font-light bright" style="padding: 30px 20px 0 0"><div class="day-of-week"></div><div class="month"></div></div>
-		
-		<div class="clock hide" style="display: block;">
-			<div class="time large bright">10:19
-				<span class="sec">48</span>
-				<span class="time-ampm">AM</span>
-			</div>
-			<div style="clear: both;"></div>
-		</div>
-
-		<div id="calendar" class="events hide"></div>
-	</header>
-
-	<div id="mapContainer" style="bottom:0;position: absolute;height: 0;width: 100%;z-index: 1000;overflow: hidden;">
-		<div id="map" style="height:100%;"></div>
-    </div>
-	
-    <div class="brightness abs-zero"></div>
-
-    <div id="content" class="abs-zero">
-	  <div id="background-underlay-1" class="abs-zero" 
-			style="display: block;"></div>
-	  <div id="background-underlay-2" class="abs-zero" style="background: none; z-index: 9; display: none;"></div>
-	  <div id="background-underlay-idle" class="abs-zero" style="background: black; z-index: 10; display: none;"></div>
-	  <div id="background-underlay-idleDimmer" class="abs-zero" style="background: rgba(0, 0, 0, .5) none repeat scroll 0% 0%; z-index: 9999; display: none;"></div>
-    </div>
-    
-    <footer style="display: block;position: absolute;bottom: 0;width: 100%;">
-	    <div id="weather" class="hide" style="display: block;position: relative;bottom: 0;width: 95%;padding: 0 2.5%;">
-			<div id="weather-container-current">
-				<div id="weather-current" class="weather-item weather-current"></div>
-				<div id="weather-forecast" class="weather-item" style="position:absolute;bottom:0;right:50px;"></div>
-				<img src="./images/1hour.png" onclick="toggleWeather()" class="weather-item" style="position:absolute;bottom:60px;right:0;cursor:pointer;"/>
-			</div>
-			<div id="weather-container-hourly" style="position:relative;right:0;width:0;overflow:auto;float:right;">
-				<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;bottom:100px;left:-5px;cursor:pointer;"/>
-				<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;bottom: 25px;left:50px;position:relative;"></div>	
-			</div>
-		</div>
-		<div id="weather-loading" class="text-center" style="margin-bottom: 30px;">
-			<span class="dark font-light">Loading Weather...</span>
-		</div>
-	</footer>
-	<div id="progress" class="screenSaved"></div>
-</div>
-
-<script>
-	var backgroundImages = [];
-	$(function() {
-
-		/*
-		var i = null;
-
-		if ('ontouchstart' in window) {
-			$(window).on('touchstart', function() {
-				clearTimeout(i);
-				$(".options-link").css({opacity: 1});
-				i = setTimeout(function () {
-					$(".options-link").css({opacity: 0});
-				}, 10000);
+			
+			// need to add weather units
+			myMpanel.init({
+				route: "/app",
+				isPremium: 0,
+				timeFormat: 12,
+				dateFormat: "MMMM D",
+				clockType: "digital",
+				timezone: "America/Los_Angeles",
+				city: "sacramento",
+				state: "ca",
+				weatherGovZone: "CAZ016",
+				weatherBitKey: "459ece455ed548d4bf7c570b523480e9",
+				showSeconds: "1",
+				showAmpm: "1",
+				photoTransition: 1,
+				photoChange: 60000,
+				photoLayout: "fill"
 			});
-		} else {
-			$(window).mousemove(function() {
-				clearTimeout(i);
-				$(".options-link").css({opacity: 1});
-				i = setTimeout(function () {
-					$(".options-link").css({opacity:0});
-				}, 10000);
-			});
-		}
 
-		i = setTimeout(function () {
-			$(".options-link").css({opacity: 0});
-		}, 10000);
-		*/
-		
-		
-		
-		var myMpanel = new mPanel;
-
-		myMpanel.init({
-			route: "/app",
-			isPremium: 0,
-			timeFormat: 12,
-			dateFormat: "MMMM D",
-			clockType: "digital",
-			timezone: "America/Los_Angeles",
-			showSeconds: "1",
-			showAmpm: "1",
-			photoTransition: 1,
-			photoChange: 60000,
-			photoLayout: "fill"
+			myMpanel.updatePhoto(backgroundImages);			
+			myMpanel.updateTime();
+			myMpanel.updateWeather();	
+			$('.clock').show();
 		});
-
-
-
-		myMpanel.updatePhoto(backgroundImages);
-		
-		$('.clock').show();
-		myMpanel.updateTime();
-		
-		
-		myMpanel.updateWeather();	
-	});
-</script>
+	</script>
 </body></html>

@@ -909,3 +909,16 @@ a.options-link {
     content: "\e199" }
 .glyphicon-tree-deciduous:before {
     content: "\e200" }
+	
+	
+.time-ampm { left: -1.4em }
+
+.brightness {
+	background: rgba(0,0,0, 0.3);
+}
+.gmnoprint {
+	display: none;
+}
+.gm-control-active.gm-fullscreen-control {
+	display: none;
+}
