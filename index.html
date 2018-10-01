@@ -51,8 +51,9 @@
 				<div class="clearfix"></div>
 				<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:auto;"></div>
 			</div>
-			<div id="mapToggle" onclick="toggleMaps()" class="screenSaved" style="position: absolute;height: 50px;width: 50px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 25px);opacity: 0.7;cursor: pointer;">
-				<img src="./images/google-maps.png" />
+			<div id="mapToggle" class="screenSaved" style="position: absolute;height: 50px;width: 150px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 64px);">
+				<img class="traffic" style="opacity: 0.7;cursor: pointer;" onclick="toggleMaps('traffic')" src="./images/google-maps.png" />
+				<img class="weather" style="opacity: 0.7;cursor: pointer;" onclick="toggleMaps('weather')" src="./images/weatherRadar.png" />
 			</div>
 			<div class="date pull-right small font-light bright" style="padding: 30px 20px 0 0"><div class="day-of-week"></div><div class="month"></div></div>
 			
@@ -66,6 +67,17 @@
 
 		<div id="mapContainer" style="bottom:0;position: absolute;height: 0;width: 100%;z-index: 1000;overflow: hidden;">
 			<div id="map" style="height:100%;"></div>
+		</div>
+
+		<div id="weatherMapContainer" style="bottom:0;position: absolute;height: 0;width: 100%;z-index: 1000;overflow: hidden;">
+			<div id="weatherMap" style="height:100%;">
+			<!--
+			<iframe src="https://www.rainviewer.com/?loc=38.5389,-120.9412,8&oFa=0&oC=0&oU=0&oCS=1&oF=1&oAP=1&rmt=4&c=3&o=83&lm=0&th=1" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>
+			
+			<iframe src="https://www.rainviewer.com/map.html?loc=38.5389,-120.9412,8&amp;oFa=0&amp;oC=0&amp;oU=0&amp;oCUB=1&amp;oCS=1&amp;oF=0&amp;oAP=0&amp;rmt=4" style="border:0px #ffffff none;" name="myiFrame" scrolling="no" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen=""></iframe>
+			-->
+			
+			</div>
 		</div>
 		
 		<div class="brightness abs-zero"></div>
@@ -98,31 +110,57 @@
 	</div>
 
 	<script>
-		function initMap() {
-			var map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 12,
-				center: {lat: 38.514379, lng: -121.494088}
-			});
+		function initMap(type) {
+			switch(type){
+				case "traffic":
+					var map = new google.maps.Map(document.getElementById('map'), {
+						zoom: 12,
+						center: {lat: 38.514379, lng: -121.494088}
+					});
 
-			var trafficLayer = new google.maps.TrafficLayer();
-			trafficLayer.setMap(map);
-			$('#mapContainer').animate({height:'75%'},1500);
+					var trafficLayer = new google.maps.TrafficLayer();
+					trafficLayer.setMap(map);
+					$('#mapContainer').animate({height:'75%'},1500);
+					break;
+					
+				case "weather":
+					document.getElementById('weatherMap').innerHTML = '<iframe src="https://www.rainviewer.com/map.html?loc=38.5389,-120.9412,8&amp;oFa=0&amp;oC=0&amp;oU=0&amp;oCUB=1&amp;oCS=1&amp;oF=0&amp;oAP=0&amp;rmt=4" style="border:0px #ffffff none;" name="myiFrame" scrolling="no" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen=""></iframe>';
+					$('#weatherMapContainer').animate({height:'75%'},1500);
+					break;
+			}
 		}
 		  
 		var mapOpen = false;
-		function toggleMaps(){
+		var lastMapType = '';
+		function toggleMaps(type){
+			//console.log(type);
 			if(mapOpen===true){
-				$('#mapContainer').animate({height:'0'},1500);
-				setTimeout(function(){
-					mapOpen=false;
-					document.getElementById('map').innerHTML = '';
-					document.getElementById('mapToggle').style.opactiy = "0.7";
-				},1500);
+				if(lastMapType==="traffic"){
+					$('#mapContainer').animate({height:'0'},1500);
+					setTimeout(function(){
+						document.getElementById('map').innerHTML = '';
+						document.getElementsByClassName('traffic')[0].style.opacity = "0.7";
+					},1500);
+				}else if(lastMapType==="weather"){
+					$('#weatherMapContainer').animate({height:'0'},1500);
+					setTimeout(function(){
+						document.getElementById('weatherMap').innerHTML = '';
+						document.getElementsByClassName('weather')[0].style.opacity = "0.7";
+					},1500);
+				}
+			}
+			if(mapOpen===true && type===lastMapType){
+				mapOpen=false;
 			} else {
 				mapOpen=true;
-				document.getElementById('mapToggle').style.opactiy = "1";
-				initMap();
+				if(type==="traffic"){
+					document.getElementsByClassName('traffic')[0].style.opacity = "1";
+				}else if(type==="weather"){
+					document.getElementsByClassName('weather')[0].style.opacity = "1";
+				}
+				initMap(type);
 			}
+			lastMapType = type;
 		}
 		  
 		var weatherCurrentOpen = true;
@@ -132,9 +170,6 @@
 				$('#weather-container-hourly').animate({width:'103%'},1500);
 				$('#weather-container-current .weather-item').hide();
 				$('#weather-container-hourly .weather-item').show();
-				//setTimeout(function(){
-				//	
-				//},1000);
 				weatherCurrentOpen=false;
 			} else {
 				$('#weather-container-current').animate({width:'100%'},1500);
@@ -176,7 +211,7 @@
 			screenSaved = false;
 			$('.screenSaved').show();
 			clearTimeout(timer);
-			timer = setTimeout(screenSaver, 600000);
+			timer = setTimeout(screenSaver, 300000);
 			//timer = setTimeout(screenSaver, 3000)
 			// 1000 milisec = 1 sec
 			// 60000 = 1 minute
