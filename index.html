@@ -111,6 +111,13 @@
 
 	<script>
 		function initMap(type) {
+			if($('#weather-alert').css('display')==='none'){
+				var height = '75%';
+			} else {
+				var height = '65%';
+			}
+		
+			var thisheight = $('#weather-alert').css('display')
 			switch(type){
 				case "traffic":
 					var map = new google.maps.Map(document.getElementById('map'), {
@@ -120,12 +127,12 @@
 
 					var trafficLayer = new google.maps.TrafficLayer();
 					trafficLayer.setMap(map);
-					$('#mapContainer').animate({height:'75%'},1500);
+					$('#mapContainer').animate({height:height},1500);
 					break;
 					
 				case "weather":
 					document.getElementById('weatherMap').innerHTML = '<iframe src="https://www.rainviewer.com/map.html?loc=38.5389,-120.9412,8&amp;oFa=0&amp;oC=0&amp;oU=0&amp;oCUB=1&amp;oCS=1&amp;oF=0&amp;oAP=0&amp;rmt=4" style="border:0px #ffffff none;" name="myiFrame" scrolling="no" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen=""></iframe>';
-					$('#weatherMapContainer').animate({height:'75%'},1500);
+					$('#weatherMapContainer').animate({height:height},1500);
 					break;
 			}
 		}
@@ -134,7 +141,7 @@
 		var lastMapType = '';
 		function toggleMaps(type){
 			//console.log(type);
-			if(mapOpen===true){
+			if(mapOpen===true || type==='reset'){
 				if(lastMapType==="traffic"){
 					$('#mapContainer').animate({height:'0'},1500);
 					setTimeout(function(){
@@ -152,26 +159,28 @@
 			if(mapOpen===true && type===lastMapType){
 				mapOpen=false;
 			} else {
-				mapOpen=true;
 				if(type==="traffic"){
 					document.getElementsByClassName('traffic')[0].style.opacity = "1";
 				}else if(type==="weather"){
 					document.getElementsByClassName('weather')[0].style.opacity = "1";
 				}
-				initMap(type);
+				if(type!='reset'){
+					mapOpen=true;
+					initMap(type);
+					lastMapType = type;				
+				}
 			}
-			lastMapType = type;
 		}
 		  
 		var weatherCurrentOpen = true;
-		function toggleWeather(){
-			if(weatherCurrentOpen===true){
+		function toggleWeather(reset=null){
+			if(weatherCurrentOpen===true && reset===null){
 				$('#weather-container-current').animate({width:'0'},1500);
 				$('#weather-container-hourly').animate({width:'103%'},1500);
 				$('#weather-container-current .weather-item').hide();
 				$('#weather-container-hourly .weather-item').show();
 				weatherCurrentOpen=false;
-			} else {
+			} else if(weatherCurrentOpen===false){
 				$('#weather-container-current').animate({width:'100%'},1500);
 				$('#weather-container-hourly').animate({width:'0'},1500);
 				setTimeout(function(){
@@ -197,6 +206,8 @@
 		var screenSaved = false;
 		function screenSaver() {
 			//console.log("screensaver");
+			toggleWeather('reset');
+			toggleMaps('reset');
 			$('#background-underlay-idle').show();
 			$('#background-underlay-idleDimmer').show();
 			screenSaved = true;
@@ -211,10 +222,11 @@
 			screenSaved = false;
 			$('.screenSaved').show();
 			clearTimeout(timer);
-			timer = setTimeout(screenSaver, 300000);
-			//timer = setTimeout(screenSaver, 3000)
+			//timer = setTimeout(screenSaver, 9000);
+			timer = setTimeout(screenSaver, 30000)
 			// 1000 milisec = 1 sec
 			// 60000 = 1 minute
+			// 30000 = 5 min
 			// 600000 = 10 minutes
 			// 18000000 = 30 minutes
 		}
