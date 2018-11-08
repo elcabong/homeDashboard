@@ -49,7 +49,7 @@
 						<div id="weather-alert-description" class="small font-light"></div>
 				</div>
 				<div class="clearfix"></div>
-				<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:auto;"></div>
+				<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;"></div>
 			</div>
 			<div id="mapToggle" class="screenSaved" style="position: absolute;height: 50px;width: 150px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 64px);">
 				<img class="traffic" style="opacity: 0.7;cursor: pointer;" onclick="toggleMaps('traffic')" src="./images/google-maps.png" />
@@ -201,13 +201,32 @@
 		document.ontouchstart = resetTimer;
 		document.onclick = resetTimer;     // touchpad clicks
 		document.onscroll = resetTimer;    // scrolling with arrow keys
+
+		$('#weather-alert').bind("touchstart mousedown", toggleWeatherAlertView);
+		
+		
+		function toggleWeatherAlertView(reset=null){
+			if($('#weather-alert-message').css('white-space') === 'nowrap'){
+				$('#weather-alert-message').css({'white-space':'unset'});
+			} else {
+				$('#weather-alert-message').css({'white-space':'nowrap'});
+			}
+		}
+		
+		
+		function resetAll(){
+			toggleWeather('reset');
+			toggleMaps('reset');
+			toggleWeatherAlertView('reset');
+		}
+		
+		
 		
 		
 		var screenSaved = false;
 		function screenSaver() {
 			//console.log("screensaver");
-			toggleWeather('reset');
-			toggleMaps('reset');
+			resetAll();
 			$('#background-underlay-idle').show();
 			$('#background-underlay-idleDimmer').show();
 			screenSaved = true;
@@ -223,10 +242,10 @@
 			$('.screenSaved').show();
 			clearTimeout(timer);
 			//timer = setTimeout(screenSaver, 9000);
-			timer = setTimeout(screenSaver, 30000)
+			timer = setTimeout(screenSaver, 300000);
 			// 1000 milisec = 1 sec
 			// 60000 = 1 minute
-			// 30000 = 5 min
+			// 300000 = 5 min
 			// 600000 = 10 minutes
 			// 18000000 = 30 minutes
 		}
