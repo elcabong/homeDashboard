@@ -202,7 +202,7 @@
 		document.onclick = resetTimer;     // touchpad clicks
 		document.onscroll = resetTimer;    // scrolling with arrow keys
 
-		$('#weather-alert').bind("touchstart mousedown", toggleWeatherAlertView);
+		$('#weather-alert').bind("click", toggleWeatherAlertView);
 		
 		
 		function toggleWeatherAlertView(reset=null){
