@@ -206,7 +206,7 @@
 		
 		
 		function toggleWeatherAlertView(reset=null){
-			if($('#weather-alert-message').css('white-space') === 'nowrap'){
+			if($('#weather-alert-message').css('white-space') === 'nowrap' && reset===null){
 				$('#weather-alert-message').css({'white-space':'unset'});
 			} else {
 				$('#weather-alert-message').css({'white-space':'nowrap'});
