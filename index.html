@@ -40,7 +40,7 @@
 		<!--</div>-->
 
 		<header>
-			<div id="weather-alert" class="translucent-alert weather-alert hide" style="display: none;">
+			<div id="weather-alert" onclick="toggleWeatherAlertView()" class="translucent-alert weather-alert hide" style="display: none;">
 				<div class="pull-left  font-ultralight xxsmall">
 					<img id="weather-alert-icon" src="./images/alert.png" height="25px" />
 				</div>
@@ -201,18 +201,19 @@
 		document.ontouchstart = resetTimer;
 		document.onclick = resetTimer;     // touchpad clicks
 		document.onscroll = resetTimer;    // scrolling with arrow keys
-
-		$('#weather-alert').bind("click", toggleWeatherAlertView);
 		
-		
-		function toggleWeatherAlertView(reset=null){
-			if($('#weather-alert-message').css('white-space') === 'nowrap' && reset===null){
+		function toggleWeatherAlertView(thisreset=null){
+			var reset = thisreset;
+			console.log("clicked");
+			console.log(reset);
+			if($('#weather-alert-message').css('white-space') === 'nowrap' && reset==null){
+				console.log("unset");
 				$('#weather-alert-message').css({'white-space':'unset'});
 			} else {
+				console.log("nowrap");
 				$('#weather-alert-message').css({'white-space':'nowrap'});
 			}
 		}
-		
 		
 		function resetAll(){
 			toggleWeather('reset');
@@ -241,8 +242,8 @@
 			screenSaved = false;
 			$('.screenSaved').show();
 			clearTimeout(timer);
-			//timer = setTimeout(screenSaver, 9000);
-			timer = setTimeout(screenSaver, 300000);
+			timer = setTimeout(screenSaver, 9000);
+			//timer = setTimeout(screenSaver, 300000);
 			// 1000 milisec = 1 sec
 			// 60000 = 1 minute
 			// 300000 = 5 min
