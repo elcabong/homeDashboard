@@ -202,15 +202,10 @@
 		document.onclick = resetTimer;     // touchpad clicks
 		document.onscroll = resetTimer;    // scrolling with arrow keys
 		
-		function toggleWeatherAlertView(thisreset=null){
-			var reset = thisreset;
-			console.log("clicked");
-			console.log(reset);
-			if($('#weather-alert-message').css('white-space') === 'nowrap' && reset==null){
-				console.log("unset");
+		function toggleWeatherAlertView(reset=null){
+			if($('#weather-alert-message').css('white-space') === 'nowrap' && reset===null){
 				$('#weather-alert-message').css({'white-space':'unset'});
 			} else {
-				console.log("nowrap");
 				$('#weather-alert-message').css({'white-space':'nowrap'});
 			}
 		}
@@ -242,8 +237,8 @@
 			screenSaved = false;
 			$('.screenSaved').show();
 			clearTimeout(timer);
-			timer = setTimeout(screenSaver, 9000);
-			//timer = setTimeout(screenSaver, 300000);
+			//timer = setTimeout(screenSaver, 9000);
+			timer = setTimeout(screenSaver, 300000);
 			// 1000 milisec = 1 sec
 			// 60000 = 1 minute
 			// 300000 = 5 min
