@@ -13,6 +13,7 @@ body, html {
 	font-family: "Roboto", "HelveticaNeue-Medium";
 	letter-spacing: 0px;
 	color: #ccc;
+
 	 -webkit-font-smoothing: antialiased;
 	text-shadow: 1px 1px 0px rgba(0,0,0,.3);
 	overflow:hidden;
@@ -54,24 +55,28 @@ a:hover {
 	font-size: .62em;
 	letter-spacing: 0px;
 	font-family: "Roboto", "HelveticaNeue-Medium" }
+
 .xxsmall .wi {
 	line-height: .65em }
 .xsmall {
 	font-size: 1em;
 	letter-spacing: 0px;
 	font-family: "Roboto", "HelveticaNeue-Medium" }
+
 .xsmall .wi {
 	line-height: 1em }
 .small {
 	font-size: 1.5em;
 	letter-spacing: 0px;
 	font-family: "Roboto", "HelveticaNeue-Medium" }
+
 .small .wi {
 	line-height: 1.5em }
 .medium {
 	font-size: 1.8em;
 	letter-spacing: -1px;
 	font-family: "Roboto", "HelveticaNeue-Light" }
+
 .medium .wi {
 	line-height: 1.6em }
 .medium.wi {
@@ -108,6 +113,7 @@ a:hover {
 }
 .dark {
 	color: rgba(255,255,255,0.4);
+
 }
 .dark a {
 	color: rgba(255,255,255,0.5);
@@ -164,6 +170,7 @@ a:hover {
   font-style:   normal;
   font-weight:  200;
 }
+
 
 /**
  *  Utility classes
@@ -338,6 +345,7 @@ a.options-link {
 }
 .rss-title a {
 	color: #fff;
+
 }
 .rss-title,
 .rss-description {
@@ -488,6 +496,30 @@ a.options-link {
 	-ms-transform-origin:50% 100%;
 	transform-origin:50% 100%
 }
+
+
+/**
+ * Media queries
+ * ------------------------------------------------------ */
+ @media only screen and (max-height: 900px) {
+	.layout-tablet.font-large {
+		font-size: 215% !important;
+	}
+}
+ 
+ 
+ @media only screen and (max-height: 550px) {
+	.layout-tablet.font-large {
+		font-size: 145% !important;
+	}
+}
+ 
+@media only screen and (max-height: 400px) {
+	.layout-tablet.font-large {
+		font-size: 125% !important;
+	}
+}
+
 
 /**
  * Bootstrap glyphicons 
