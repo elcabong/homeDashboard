@@ -94,12 +94,12 @@
 			<div id="weather" class="hide" style="display: block;position: relative;bottom: 0;width: 95%;padding: 0 2.5%;">
 				<div id="weather-container-current">
 					<div id="weather-current" class="weather-item weather-current"></div>
-					<div id="weather-forecast" class="weather-item" style="position:absolute;bottom:0;right:50px;"></div>
-					<img src="./images/1hour.png" onclick="toggleWeather()" class="weather-item" style="position:absolute;bottom:60px;right:0;cursor:pointer;"/>
+					<div id="weather-forecast" class="weather-item" style="position:absolute;bottom:0;right:50px;max-width: 70%;"></div>
+					<img src="./images/1hour.png" onclick="toggleWeather()" class="weather-item" style="position:absolute;bottom:45px;right:0;cursor:pointer;"/>
 				</div>
-				<div id="weather-container-hourly" style="position:relative;right:-2%;width:0;overflow:auto;float:right;">
-					<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;bottom:100px;left:-5px;cursor:pointer;"/>
-					<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;bottom: 25px;left:50px;position:relative;"></div>	
+				<div id="weather-container-hourly" style="position:relative;right:-2%;width:0;float:right;overflow:auto;">
+					<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;left:-5px;cursor:pointer;"/>
+					<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;left:50px;position:relative;"></div>	
 				</div>
 			</div>
 			<div id="weather-loading" class="text-center" style="margin-bottom: 30px;">

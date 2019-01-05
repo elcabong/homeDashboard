@@ -372,7 +372,7 @@ footer {
 	z-index: 100;
 }
 .layout-tablet #weather {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 .layout-tablet .weather-forecast {
 	line-height: 1em; 
