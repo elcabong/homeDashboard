@@ -41,15 +41,15 @@
 
 		<header>
 			<div id="weather-alert" onclick="toggleWeatherAlertView()" class="translucent-alert weather-alert hide" style="display: none;">
-				<div class="pull-left  font-ultralight xxsmall">
-					<img id="weather-alert-icon" src="./images/alert.png" height="25px" />
+				<div class="pull-left font-ultralight xxsmall" stlye="margin:-5px">
+					<img id="weather-alert-icon" src="./images/alert.png" height="20px" width="20px" />
 				</div>
-				<div style="margin-left: 70px;">
-						<div id="weather-alert-expires" class="dim xxsmall font-light pull-right"></div>
+				<div>
+						<div id="weather-alert-expires" class="xxsmall pull-right" style="margin:5px;"></div>
 						<div id="weather-alert-description" class="small font-light"></div>
 				</div>
 				<div class="clearfix"></div>
-				<div id="weather-alert-message" class="xsmall" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;"></div>
+				<div id="weather-alert-message" class="xsmall" style="/*white-space:nowrap;*/display:none;text-overflow:ellipsis;overflow:hidden;"></div>
 			</div>
 			<div id="mapToggle" class="screenSaved" style="position: absolute;height: 50px;width: 150px;z-index: 1000;margin-top: 20px;left: 50%;left: calc(50% - 64px);">
 				<img class="traffic" style="opacity: 0.7;cursor: pointer;" onclick="toggleMaps('traffic')" src="./images/google-maps.png" />
@@ -98,7 +98,7 @@
 					<img src="./images/1hour.png" onclick="toggleWeather()" class="weather-item" style="position:absolute;bottom:45px;right:0;cursor:pointer;"/>
 				</div>
 				<div id="weather-container-hourly" style="position:relative;right:-2%;width:0;float:right;overflow:auto;">
-					<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;left:-5px;cursor:pointer;margin-top:100px;"/>
+					<img src="./images/24hour.png" onclick="toggleWeather()" class="weather-item" style="display:none;position:absolute;left:-5px;cursor:pointer;margin-top:2%;"/>
 					<div id="weather-hourly" class="weather-item" style="display:none;overflow-y: hidden;overflow-x: auto;left:50px;position:relative;"></div>	
 				</div>
 			</div>
@@ -203,11 +203,18 @@
 		document.onscroll = resetTimer;    // scrolling with arrow keys
 		
 		function toggleWeatherAlertView(reset=null){
+			if($('#weather-alert-message').css('display') === 'none' && reset===null){
+				$('#weather-alert-message').css({'display':'block'});
+			} else {
+				$('#weather-alert-message').css({'display':'none'});
+			}
+		/*
 			if($('#weather-alert-message').css('white-space') === 'nowrap' && reset===null){
 				$('#weather-alert-message').css({'white-space':'unset'});
 			} else {
 				$('#weather-alert-message').css({'white-space':'nowrap'});
 			}
+		*/
 		}
 		
 		function resetAll(){
